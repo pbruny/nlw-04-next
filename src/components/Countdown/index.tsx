@@ -3,7 +3,7 @@ import styles from '../../styles/components/Countdown.module.css'
 
 export default function Countdown() {
   const [time, setTime] = useState(2 * 60)
-  const [active, setActive] = useState(false)
+  const [isActive, setIsActive] = useState(false)
 
   const minutes = Math.floor(time / 60)
   const seconds = time % 60
@@ -12,15 +12,15 @@ export default function Countdown() {
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('')
 
   useEffect(() => {
-    if (active && time > 0) {
+    if (isActive && time > 0) {
       setTimeout(() => {
         setTime(time - 1)
       }, 1000)
     }
-  }, [active, time])
+  }, [isActive, time])
 
   function startCountdown() {
-    setActive(!active)
+    setIsActive(!isActive)
   }
 
   return (
@@ -37,13 +37,24 @@ export default function Countdown() {
         </div>
       </div>
 
-      <button
-        type="button"
-        className={styles.countdownButton}
-        onClick={startCountdown}
-      >
-        {active ? 'Abandonar ciclo' : 'Iniciar um ciclo'}
-      </button>
+      {isActive ? (
+        <button
+          type="button"
+          className={styles.countdownButton + ' ' + styles.countdownCloseButton}
+          onClick={startCountdown}
+        >
+          Abandonar Ciclo{' '}
+          <img src="icons/close.svg" alt="Símbolo de um x para fechar" />
+        </button>
+      ) : (
+        <button
+          type="button"
+          className={styles.countdownButton}
+          onClick={startCountdown}
+        >
+          Iniciar um ciclo
+        </button>
+      )}
     </div>
   )
 }
