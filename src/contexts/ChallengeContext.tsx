@@ -33,13 +33,16 @@ export function ChallengesProvider({ children }: ChallengesProviderProps) {
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
 
   function completeChallenge(experience: number) {
+    if (!activeChallenge) {
+      return
+    }
     setCurrentExperience(currentExperience + experience)
     setFinishedChallenges(finishedChallenges + 1)
     setActiveChallenge(null)
   }
 
   useEffect(() => {
-    if (currentExperience > experienceToNextLevel) {
+    if (currentExperience >= experienceToNextLevel) {
       setCurrentExperience(currentExperience - experienceToNextLevel)
       setLevel(level + 1)
     }
