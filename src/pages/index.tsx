@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Home - Mova-se</title>
+        <title>Se cuida aí</title>
       </Head>
       <ExperienceBar />
 
