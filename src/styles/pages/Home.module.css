@@ -33,3 +33,9 @@
     padding-bottom: 2rem;
   }
 }
+
+@media screen and (max-height: 720px) {
+  .container {
+    margin-top: 4rem;
+  }
+}
