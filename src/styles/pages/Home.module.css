@@ -14,3 +14,22 @@
   gap: 6.25rem;
   align-content: center;
 }
+
+@media screen and (max-width: 720px) {
+  .container section {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding-bottom: 2rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+  .container section {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-bottom: 2rem;
+  }
+}
