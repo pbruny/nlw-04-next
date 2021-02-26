@@ -34,7 +34,7 @@
   }
 }
 
-@media screen and (max-height: 720px) {
+@media screen and (max-height: 720px) and (min-width: 900px) {
   .container section {
     margin-top: 4rem;
   }
