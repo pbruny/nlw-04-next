@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, ReactNode } from 'react'
 import Cookies from 'js-cookie'
 import challenges from '../../challenges.json'
+import LevelUpModal from '../components/LevelUpModal'
 
 interface ChallengeData {
   type: 'body' | 'eye'
@@ -16,6 +17,7 @@ interface ChallengeContextData {
   activeChallenge: ChallengeData
   startNewChallenge: () => void
   resetChallenge: () => void
+  closeModal: () => void
   completeChallenge: (experience: number) => void
 }
 
@@ -40,17 +42,9 @@ export function ChallengesProvider({
     rest.finishedChallenges ?? 0
   )
   const [activeChallenge, setActiveChallenge] = useState(null)
+  const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2)
-
-  function completeChallenge(experience: number) {
-    if (!activeChallenge) {
-      return
-    }
-    setCurrentExperience(currentExperience + experience)
-    setFinishedChallenges(finishedChallenges + 1)
-    setActiveChallenge(null)
-  }
 
   useEffect(() => {
     Cookies.set('level', String(level))
@@ -65,8 +59,18 @@ export function ChallengesProvider({
     }
   }, [currentExperience])
 
+  function completeChallenge(experience: number) {
+    if (!activeChallenge) {
+      return
+    }
+    setCurrentExperience(currentExperience + experience)
+    setFinishedChallenges(finishedChallenges + 1)
+    setActiveChallenge(null)
+  }
+
   function levelUp() {
     setLevel(level + 1)
+    setIsLevelUpModalOpen(true)
   }
 
   function startNewChallenge() {
@@ -96,6 +100,10 @@ export function ChallengesProvider({
     setActiveChallenge(null)
   }
 
+  function closeModal() {
+    setIsLevelUpModalOpen(false)
+  }
+
   return (
     <ChallengesContext.Provider
       value={{
@@ -107,9 +115,11 @@ export function ChallengesProvider({
         startNewChallenge,
         completeChallenge,
         resetChallenge,
+        closeModal,
       }}
     >
       {children}
+      {isLevelUpModalOpen && <LevelUpModal />}
     </ChallengesContext.Provider>
   )
 }
