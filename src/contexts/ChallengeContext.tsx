@@ -61,9 +61,13 @@ export function ChallengesProvider({
   useEffect(() => {
     if (currentExperience >= experienceToNextLevel) {
       setCurrentExperience(currentExperience - experienceToNextLevel)
-      setLevel(level + 1)
+      levelUp()
     }
   }, [currentExperience])
+
+  function levelUp() {
+    setLevel(level + 1)
+  }
 
   function startNewChallenge() {
     const randomChallengeIndex = Math.floor(Math.random() * challenges.length)
